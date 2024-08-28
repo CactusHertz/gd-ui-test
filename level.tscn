@@ -1,5 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://bn4ybdamams5w"]
+[gd_scene load_steps=6 format=3 uid="uid://bn4ybdamams5w"]
 
+[ext_resource type="Script" path="res://ui.gd" id="1_tu4ja"]
 [ext_resource type="Script" path="res://fps.gd" id="1_v056g"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_yimha"]
@@ -39,9 +40,11 @@ size = Vector3(18, 9, 18)
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(0.5, 0, -0.866025, 0, 1, 0, 0.866025, 0, 0.5, 0, 3, 0)
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
+[node name="UI" type="CanvasLayer" parent="."]
+script = ExtResource("1_tu4ja")
 
-[node name="Fps" type="Label" parent="CanvasLayer"]
+[node name="Fps" type="Label" parent="UI"]
+visible = false
 offset_right = 40.0
 offset_bottom = 23.0
 theme_override_colors/font_color = Color(1, 1, 1, 1)
@@ -50,31 +53,33 @@ theme_override_constants/outline_size = 8
 text = "FPS: "
 script = ExtResource("1_v056g")
 
-[node name="Panel" type="Panel" parent="CanvasLayer"]
-visible = false
+[node name="Panel" type="Panel" parent="UI"]
 anchors_preset = 3
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -200.0
-offset_top = -50.0
+offset_left = -636.0
+offset_top = -125.0
 grow_horizontal = 0
 grow_vertical = 0
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/Panel"]
 custom_minimum_size = Vector2(0, 100)
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -624.0
-offset_top = -100.0
-grow_horizontal = 0
-grow_vertical = 0
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -312.0
+offset_top = -67.5
+offset_right = 312.0
+offset_bottom = 67.5
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="Speed" type="Label" parent="CanvasLayer/VBoxContainer"]
+[node name="Speed" type="Label" parent="UI/Panel/VBoxContainer"]
 layout_mode = 2
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 8
@@ -82,16 +87,32 @@ theme_override_font_sizes/font_size = 48
 text = "60 "
 horizontal_alignment = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/VBoxContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="UI/Panel/VBoxContainer"]
 custom_minimum_size = Vector2(0, 64)
 layout_mode = 2
 theme_override_constants/margin_left = 16
-theme_override_constants/margin_top = 16
 theme_override_constants/margin_right = 16
 theme_override_constants/margin_bottom = 16
 
-[node name="ProgressBar" type="ProgressBar" parent="CanvasLayer/VBoxContainer/MarginContainer"]
+[node name="ProgressBar" type="ProgressBar" parent="UI/Panel/VBoxContainer/MarginContainer"]
 layout_mode = 2
 size_flags_vertical = 1
 value = 25.0
 show_percentage = false
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI"]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -40.0
+offset_bottom = 40.0
+grow_horizontal = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/HBoxContainer"]
+layout_mode = 2
+
+[node name="CheckButton" type="CheckButton" parent="UI/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "debug"
+
+[connection signal="toggled" from="UI/HBoxContainer/VBoxContainer/CheckButton" to="UI" method="_on_check_button_toggled"]
