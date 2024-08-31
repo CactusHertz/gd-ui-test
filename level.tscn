@@ -140,3 +140,4 @@ grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_v21md")
 
 [connection signal="toggled" from="UI/HBoxContainer/VBoxContainer/CheckButton" to="UI" method="_on_check_button_toggled"]
+[connection signal="item_selected" from="UI/HBoxContainer/VBoxContainer/OptionButton" to="UI" method="_on_option_button_item_selected"]
